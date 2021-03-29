@@ -9,19 +9,17 @@ public class EmployeePayroll {
     private static final String URL = "jdbc:mysql://localhost:3306/payroll_services?useSSL=false";
     private static final String user = "root";
     private static final String password = "sathWIKA@20";
+
     private Connection establishConnection() {
         Connection connection = null;
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
-            System.out.println("Driver found!");
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
         listDrivers();
         try {
-            System.out.println("\nConnecting to database: " + URL);
             connection = DriverManager.getConnection(URL, user, password);
-            System.out.println("Connection established with: " + connection);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -48,7 +46,7 @@ public class EmployeePayroll {
     }
 
     int updateEmployeeDataUsingStatement() {
-        String sql = String.format("update employee_payroll set salary = %.2f where name = '%s';", 3000000.0, "Mark");
+        String sql = String.format("update employee_payroll set salary = %f where name = '%s';", 2500000.0, "Mark");
         try (Connection connection = this.establishConnection()) {
             Statement statement = connection.createStatement();
             return statement.executeUpdate(sql);
@@ -58,14 +56,21 @@ public class EmployeePayroll {
         return 1;
     }
 
+    int updateEmployeeDataUsingPreparedStatement(String name, double salary) {
+        String sql = String.format("update employee_payroll set salary = %f where name = '%s';", salary, name);
+        try (Connection connection = this.establishConnection()) {
+            PreparedStatement prepareStatement = connection.prepareStatement(sql);
+            return prepareStatement.executeUpdate(sql);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return 1;
+    }
+
     private void listDrivers() {
         Enumeration<Driver> driverList = DriverManager.getDrivers();
         while (driverList.hasMoreElements()) {
-            Driver driverClass = driverList.nextElement();
-            System.out.println("Driver: " + driverClass.getClass().getName());
+            driverList.nextElement();
         }
     }
-
-
-
 }

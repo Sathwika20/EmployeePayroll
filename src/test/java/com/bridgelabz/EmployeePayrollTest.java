@@ -19,5 +19,12 @@ public class EmployeePayrollTest {
         int salaryUpdated= employeePayroll.updateEmployeeDataUsingStatement();
         Assert.assertEquals(1, salaryUpdated);
     }
+    @Test
+    public void givenNewSalaryForEmployee_WhenUpdatedUsingPreparedStatement_ShouldReturn1() {
+        EmployeePayroll employeePayroll = new EmployeePayroll();
+        employeePayroll.readData();
+        int salaryUpdated= employeePayroll.updateEmployeeDataUsingPreparedStatement("Charlie", 3000000);
+        Assert.assertEquals(1, salaryUpdated);
+    }
 
 }
