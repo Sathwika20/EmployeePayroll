@@ -9,7 +9,7 @@ import java.util.Enumeration;
 public class EmployeePayroll {
     private static final String URL = "jdbc:mysql://localhost:3306/payroll_services?useSSL=false";
     private static final String user = "root";
-    private static final String password = "Ani1997@";
+    private static final String password = "sathWIKA@20";
 
     private void establishConnection() throws EmployeePayrollException {
         Connection connection;
