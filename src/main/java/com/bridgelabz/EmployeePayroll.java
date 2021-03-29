@@ -9,7 +9,6 @@ public class EmployeePayroll {
     private static final String URL = "jdbc:mysql://localhost:3306/payroll_services?useSSL=false";
     private static final String user = "root";
     private static final String password = "sathWIKA@20";
-
     private Connection establishConnection() {
         Connection connection = null;
         try {
@@ -48,6 +47,17 @@ public class EmployeePayroll {
         return employeePayrollData;
     }
 
+    int updateEmployeeDataUsingStatement() {
+        String sql = String.format("update employee_payroll set salary = %.2f where name = '%s';", 3000000.0, "Mark");
+        try (Connection connection = this.establishConnection()) {
+            Statement statement = connection.createStatement();
+            return statement.executeUpdate(sql);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return 1;
+    }
+
     private void listDrivers() {
         Enumeration<Driver> driverList = DriverManager.getDrivers();
         while (driverList.hasMoreElements()) {
@@ -55,6 +65,7 @@ public class EmployeePayroll {
             System.out.println("Driver: " + driverClass.getClass().getName());
         }
     }
+
 
 
 }
