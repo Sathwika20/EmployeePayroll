@@ -1,76 +1,34 @@
 package com.bridgelabz;
+
 import java.sql.*;
-import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.Enumeration;
-import java.util.List;
 
 public class EmployeePayroll {
-    private static final String URL = "jdbc:mysql://localhost:3306/payroll_services?useSSL=false";
-    private static final String user = "root";
-    private static final String password = "sathWIKA@20";
-
-    private Connection establishConnection() {
-        Connection connection = null;
-        try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
+    public static void main(String[] args) {
+        String URL = "jdbc:mysql://localhost:3306/payroll_services?useSSL=false";
+        String user = "root";
+        String password = "sathWIKA@20";
+        Connection connection;
+        try{
+            Class.forName("com.mysql.jdbc.Driver");
+            System.out.println("Driver loaded!");
         } catch (ClassNotFoundException e) {
-            e.printStackTrace();
+            throw new IllegalStateException("Cannot find the driver in the classpath!", e);
         }
-        listDrivers();
+        ListDrivers();
         try {
-            connection = DriverManager.getConnection(URL, user, password);
-        } catch (SQLException e) {
-            e.printStackTrace();
+            Class.forName("com.mysql.jdbc.Driver");
+            System.out.println("Driver loaded!");
+        } catch (ClassNotFoundException e){
+            throw new IllegalStateException("Cannot find the driver in the classpath!", e);
         }
-        return connection;
     }
 
-    public List<EmployeePayrollData> readData() {
-        String sql = "SELECT * FROM employee_payroll;";
-        List<EmployeePayrollData> employeePayrollData = new ArrayList<>();
-        try (Connection connection = this.establishConnection()) {
-            Statement statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery(sql);
-            while (resultSet.next()) {
-                int id = resultSet.getInt("id");
-                String name = resultSet.getString("name");
-                double salary = resultSet.getDouble("salary");
-                LocalDate startDate = resultSet.getDate("start").toLocalDate();
-                employeePayrollData.add(new EmployeePayrollData(id, name, salary, startDate));
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return employeePayrollData;
-    }
-
-    int updateEmployeeDataUsingStatement() {
-        String sql = String.format("update employee_payroll set salary = %f where name = '%s';", 2500000.0, "Mark");
-        try (Connection connection = this.establishConnection()) {
-            Statement statement = connection.createStatement();
-            return statement.executeUpdate(sql);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return 1;
-    }
-
-    int updateEmployeeDataUsingPreparedStatement(String name, double salary) {
-        String sql = String.format("update employee_payroll set salary = %f where name = '%s';", salary, name);
-        try (Connection connection = this.establishConnection()) {
-            PreparedStatement prepareStatement = connection.prepareStatement(sql);
-            return prepareStatement.executeUpdate(sql);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return 1;
-    }
-
-    private void listDrivers() {
+    private static void ListDrivers() {
         Enumeration<Driver> driverList = DriverManager.getDrivers();
-        while (driverList.hasMoreElements()) {
-            driverList.nextElement();
+        while (driverList.hasMoreElements()){
+            Driver driverClass = (Driver) driverList.nextElement();
+            System.out.println("  "+driverClass.getClass().getName());
         }
     }
 }
