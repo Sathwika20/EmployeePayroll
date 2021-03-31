@@ -32,5 +32,55 @@ public class EmployeePayrollTest{
         List<EmployeePayrollData> employeePayrollDataList = employeePayroll.readData();
         Assert.assertEquals(2, employeePayrollDataList.size());
     }
+    @Test
+    public void givenEmployeePayrollDB_WhenRetrieved_ShouldMatchSumByGender() {
+        EmployeePayroll employeePayroll = new EmployeePayroll();
+        String sql = "SELECT SUM(salary) FROM payroll_service WHERE gender='M' GROUP BY gender;";
+        String fn = "SUM(salary)";
+        double result = employeePayroll.DataBaseFunctionsUsingGender(sql, fn);
+        Assert.assertEquals(3500000, result);
+
+    }
+
+
+    @Test
+    public void givenEmployeePayrollDB_WhenRetrieved_ShouldMatchAvgByGender() {
+        EmployeePayroll employeePayroll = new EmployeePayroll();
+        String sql = "SELECT AVG(salary) FROM payroll_service WHERE gender='M' GROUP BY gender;";
+        String fn = "AVG(salary)";
+        double result = employeePayroll.DataBaseFunctionsUsingGender(sql, fn);
+        Assert.assertEquals(1750000, result);
+
+    }
+
+    @Test
+    public void givenEmployeePayrollDB_WhenRetrieved_ShouldMatchMaxByGender() {
+        EmployeePayroll employeePayroll = new EmployeePayroll();
+        String sql = "SELECT MAX(salary) FROM payroll_service WHERE gender='M' GROUP BY gender;";
+        String fn = "MAX(salary)";
+        double result = employeePayroll.DataBaseFunctionsUsingGender(sql, fn);
+        Assert.assertEquals(2500000, result);
+
+    }
+
+    @Test
+    public void givenEmployeePayrollDB_WhenRetrieved_ShouldMatchMinByGender() {
+        EmployeePayroll employeePayroll = new EmployeePayroll();
+        String sql = "SELECT MIN(salary) FROM payroll_service WHERE gender='M' GROUP BY gender;";
+        String fn = "MIN(salary)";
+        double result = employeePayroll.DataBaseFunctionsUsingGender(sql, fn);
+        Assert.assertEquals(1000000, result);
+
+    }
+
+    @Test
+    public void givenEmployeePayrollDB_WhenRetrieved_ShouldMatchCountByGender() {
+        EmployeePayroll employeePayroll = new EmployeePayroll();
+        String sql = "SELECT COUNT(*) FROM payroll_service WHERE gender='M' GROUP BY gender;";
+        String fn = "COUNT(*)";
+        double result = employeePayroll.DataBaseFunctionsUsingGender(sql, fn);
+        Assert.assertEquals(2, result);
+
+    }
 
 }

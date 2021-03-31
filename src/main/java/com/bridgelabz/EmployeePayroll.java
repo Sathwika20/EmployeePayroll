@@ -65,7 +65,7 @@ public class EmployeePayroll {
         }
         return 1;
     }
-    int updateEmployeeDataUsingPreparedStatement(String name, double salary) {
+    public int updateEmployeeDataUsingPreparedStatement(String name, double salary) {
         String sql = String.format("update payroll_service set salary = %f where name = '%s';", salary, name);
         try (Connection connection = this.establishConnection()) {
             PreparedStatement prepareStatement = connection.prepareStatement(sql);
@@ -74,6 +74,19 @@ public class EmployeePayroll {
             e.printStackTrace();
         }
         return 1;
+    }
+    public double DataBaseFunctionsUsingGender(String sql, String fn) {
+        establishConnection();
+        ResultSet resultSet;
+        double result = 0;
+        try {
+            resultSet = establishConnection().createStatement().executeQuery(sql);
+            resultSet.next();
+            result = resultSet.getDouble(fn);
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return result;
     }
 
     public static void main(String[] args) {
