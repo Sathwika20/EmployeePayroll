@@ -11,5 +11,12 @@ public class EmployeePayrollTest{
         List<EmployeePayrollData> employeePayrollDataList = employeePayroll.readData();
         Assert.assertEquals(4, employeePayrollDataList.size());
     }
+    @Test
+    public void givenNewSalaryForEmployee_WhenUpdated_ShouldReturn1() {
+        EmployeePayroll employeePayroll = new EmployeePayroll();
+        employeePayroll.readData();
+        int salaryUpdated= employeePayroll.updateEmployeeDataUsingStatement();
+        Assert.assertEquals(1, salaryUpdated);
+    }
 
 }

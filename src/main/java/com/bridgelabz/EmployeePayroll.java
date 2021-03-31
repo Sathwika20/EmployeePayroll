@@ -55,6 +55,16 @@ public class EmployeePayroll {
         }
         return employeePayrollData;
     }
+    public int updateEmployeeDataUsingStatement() {
+        String sql = String.format("update payroll_service set salary = %.2f where name = '%s';", 30000000.0, "Charlie");
+        try (Connection connection = this.establishConnection()) {
+            Statement statement = connection.createStatement();
+            return statement.executeUpdate(sql);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return 1;
+    }
 
     public static void main(String[] args) {
         EmployeePayroll employeePayroll = new EmployeePayroll();
