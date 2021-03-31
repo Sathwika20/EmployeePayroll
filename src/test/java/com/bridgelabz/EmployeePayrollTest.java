@@ -25,5 +25,12 @@ public class EmployeePayrollTest{
         int salaryUpdated= employeePayroll.updateEmployeeDataUsingPreparedStatement("Charlie", 3000000);
         Assert.assertEquals(1, salaryUpdated);
     }
+    @Test
+    public void givenDateRange_WhenRetrieved_ShouldMatchEmployeeCount() {
+        EmployeePayroll employeePayroll = new EmployeePayroll();
+        String sql = "SELECT * FROM payroll_service WHERE start BETWEEN CAST('2019-01-01' AS DATE) AND DATE(NOW());";
+        List<EmployeePayrollData> employeePayrollDataList = employeePayroll.readData();
+        Assert.assertEquals(2, employeePayrollDataList.size());
+    }
 
 }
