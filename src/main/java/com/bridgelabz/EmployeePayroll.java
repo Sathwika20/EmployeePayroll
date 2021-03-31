@@ -4,43 +4,28 @@ package com.bridgelabz;
 import java.sql.Connection;
 import java.sql.Driver;
 import java.sql.DriverManager;
-import java.sql.SQLException;
 import java.util.Enumeration;
 
 public class EmployeePayroll {
+    public static void main(String[] args) {
 
-    private static final String URL = "jdbc:mysql://localhost:3306/payroll_services?useSSL=false";
-    private static final String user = "root";
-    private static final String password = "sathWIKA@20";
-
-    private void establishConnection() {
+        String URL = "jdbc:mysql://localhost:3306/payroll_services?useSSL=false";
+        String user = "root";
+        String password = "sathWIKA@20";
         Connection connection;
-        try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            System.out.println("Driver found!");
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
+        try{
+            Class.forName("com.mysql.jdbc.Driver");
+            System.out.println("Driver loaded!");
+        } catch (ClassNotFoundException e){
+            throw new IllegalStateException("Cannot find the driver in the classpath!", e);
         }
         listDrivers();
-        try {
-            System.out.println("\nConnecting to database: " + URL);
-            connection = DriverManager.getConnection(URL, user, password);
-            System.out.println("Connection established with: " + connection);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
     }
-
-    private void listDrivers() {
+    private static void listDrivers(){
         Enumeration<Driver> driverList = DriverManager.getDrivers();
-        while (driverList.hasMoreElements()) {
-            Driver driverClass = driverList.nextElement();
-            System.out.println("Driver: " + driverClass.getClass().getName());
+        while (driverList.hasMoreElements()){
+            Driver driverClass = (Driver) driverList.nextElement();
+            System.out.println("  "+driverClass.getClass().getName());
         }
-    }
-
-    public static void main(String[] args) {
-        EmployeePayroll employeePayroll = new EmployeePayroll();
-        employeePayroll.establishConnection();
     }
 }
