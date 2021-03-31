@@ -65,6 +65,16 @@ public class EmployeePayroll {
         }
         return 1;
     }
+    int updateEmployeeDataUsingPreparedStatement(String name, double salary) {
+        String sql = String.format("update payroll_service set salary = %f where name = '%s';", salary, name);
+        try (Connection connection = this.establishConnection()) {
+            PreparedStatement prepareStatement = connection.prepareStatement(sql);
+            return prepareStatement.executeUpdate(sql);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return 1;
+    }
 
     public static void main(String[] args) {
         EmployeePayroll employeePayroll = new EmployeePayroll();
