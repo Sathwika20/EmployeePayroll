@@ -38,7 +38,7 @@ public class EmployeePayroll {
     }
 
     public List<EmployeePayrollData> readData() {
-        String sql = "SELECT * FROM employee_details;";
+        String sql = "SELECT * FROM payroll_service;";
         List<EmployeePayrollData> employeePayrollData = new ArrayList<>();
         try (Connection connection = this.establishConnection()) {
             Statement statement = connection.createStatement();
