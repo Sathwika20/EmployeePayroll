@@ -82,5 +82,16 @@ public class EmployeePayrollTest{
         Assert.assertEquals(2, result);
 
     }
+    @Test
+    public void givenEmployeePayrollDB_AbilityToInsertNewData(){
+        EmployeePayroll employeePayroll = new EmployeePayroll();
+        String name="Terisa";
+        String gender="F";
+        double salary=2500000;
+        String start="2020-03-15";
+        int result = employeePayroll.insertingData(name, gender, salary, start);
+        Assert.assertEquals(1, result);
+    }
+
 
 }
