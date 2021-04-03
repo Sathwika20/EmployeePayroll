@@ -107,4 +107,16 @@ public class EmployeePayroll {
         }
         return 1;
     }
+    public int insertingPayrollDetails(Integer employee_id, double salary){
+        try{
+            Connection connection=this.establishConnection();
+            PreparedStatement preparedStatement=connection.prepareStatement("INSERT INTO employee_details(employee_id,salary) values(?,?); ");
+            preparedStatement.setInt(1,employee_id);
+            preparedStatement.setDouble(2,salary);
+            preparedStatement.executeUpdate();
+        }catch (SQLException throwables){
+            throwables.printStackTrace();
+        }
+        return 1;
+    }
 }

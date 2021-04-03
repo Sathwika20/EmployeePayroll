@@ -92,6 +92,13 @@ public class EmployeePayrollTest{
         int result = employeePayroll.insertingData(name, gender, salary, start);
         Assert.assertEquals(1, result);
     }
+    @Test
+    public void givenPayrollDetails_AbilityToInsertPayrollDetails() {
+        EmployeePayroll employeePayroll = new EmployeePayroll();
+        Integer employee_id=5; double salary=3500000;
+        int result = employeePayroll.insertingPayrollDetails(employee_id, salary);
+        Assert.assertEquals(1, result);
+    }
 
 
 }
